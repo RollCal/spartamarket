@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+import os
 
 # Create your models here.
 class Post(models.Model):
@@ -8,8 +10,10 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    author = models.ForeignKey(User, on_delete=models.CASCADE) # on_delete = 이 포스트의 작성자가 db에서 삭제됐을때 이 포스트도 함께 삭제함.
+
     def __str__(self): # 포스트제목 정의
-        return f'[{self.pk}]{self.title}'
+        return f'[{self.pk}]{self.title} :: {self.author}' # 작성자도 출력되도록 함.
 
     def get_absolute_url(self): # get_absolute_url로 각 게시물로 가는 기능을 활성화
         return f'/post/{self.pk}/'

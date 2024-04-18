@@ -1,17 +1,22 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ post.title }} - Post</title>
-</head>
-<body>
-<nav>
-    <a href="/post/">Post</a>
-</nav>
-    <h1>{{ post.title }}</h1>
-    <h4>{{ post.created_at }}</h4>
-    <p>{{ post.content }}</p>
-<hr/>
-<h3>댓글 칸</h3>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block head_title %}
+    {{ post.title }} - Post
+{% endblock %}
+
+{% block main_area %}
+    <div id="post-area">
+        <h1>{{ post.title }}</h1>
+        <h4>{{ post.created_at }}</h4>
+        <!-- Preview Image -->
+        <img class="img-fluid rounded" src="{{ post.head_image.url }}" alt="">
+        <p>{{ post.content }}</p>
+    <hr/>
+    </div>
+
+
+    <div id="comment-area">
+        <h3>댓글 칸</h3>
+    </div>
+
+{% endblock %}
