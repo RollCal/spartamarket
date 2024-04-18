@@ -10,3 +10,6 @@ class Post(models.Model):
 
     def __str__(self): # 포스트제목 정의
         return f'[{self.pk}]{self.title}'
+
+    def get_absolute_url(self): # get_absolute_url로 각 게시물로 가는 기능을 활성화
+        return f'/post/{self.pk}/'
