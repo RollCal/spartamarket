@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import Post, Hashtag
+from .models import Post, Hashtag, Tag
 
 
 class PostList(ListView): # CBV
@@ -23,7 +23,27 @@ class PostDetail(DetailView):
         context['no_hashtag_post_count'] = Post.objects.filter(hashtag=None).count()
         return context
 
+def hashtag_page(request, slug): #hashtag가 없으면 미분류로 hash태그가 없는 포스트만 보여줌.
+    if slug == 'no_hashtag':
+        hashtag = '미분류'
+        post_list = Post.objects.filter(hashtag=None)
+    else:
+        hashtag = slug.objects.get(slug=slug)
+        post_list = Post.objects.filter(hashtag=hashtag)
 
+def tag_page(request, slug):
+    tag = Tag.objects.get(slug=slug)
+    post_list = tag.post_set.all()
+
+    return render(
+        request,
+        'index.html',
+        {'post_list': post_list,
+         'tag': tag,
+         'hashtag': Hashtag.objects.all(),
+         'no_hashtag_post_count': Post.objects.filter(hashtag=None).count()
+         }
+    )
 
 # Create your views here.
 # def index(request):

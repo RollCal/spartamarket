@@ -9,7 +9,7 @@
     {% endblock %}
     {% for hashtag in hashtags %}
     <li>
-        <a href="{{ hashtag.get_absolute_url }}">{{ hashtag }} ({{ hashtag.post_set.count }}</a>
+        <a href="{{ hashtag.get_absolute_url }}">{{ hashtag }} ({{ hashtag.post_set.count }})</a>
     </li>
     {% endfor %}
     <li>
