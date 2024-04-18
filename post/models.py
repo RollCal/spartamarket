@@ -10,7 +10,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE) # on_delete = 이 포스트의 작성자가 db에서 삭제됐을때 이 포스트도 함께 삭제함.
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL) # on_delete = 이 포스트의 작성자가 db에서 삭제됐을때 이 포스트도 함께 삭제함.
 
     def __str__(self): # 포스트제목 정의
         return f'[{self.pk}]{self.title} :: {self.author}' # 작성자도 출력되도록 함.
