@@ -5,7 +5,13 @@
 {% endblock %}
 
 {% block main_area %}
+
     <div id="post-area">
+        {% if post.hashtag %}
+            <span class="badge badge-secondary float-right">{{ post.hashtag }}</span>
+        {% else %}
+            <span class="badge badge-secondary float-right">미분류</span>
+        {% endif %}
         <h1>{{ post.title }}</h1>
         <h4>{{ post.created_at }}</h4>
         <!-- Preview Image -->
@@ -14,9 +20,15 @@
     <hr/>
     </div>
 
+<!--comment-->
+<div id="comment-area">
+    <h3>댓글 칸</h3>
+</div>
 
-    <div id="comment-area">
-        <h3>댓글 칸</h3>
-    </div>
+<!--작성자-->
+<!--<p class="lead">-->
+<!--    by-->
+<!--    <a href="#">{{ post.author | upper}}</a>-->
+<!--</p>-->
 
 {% endblock %}

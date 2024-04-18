@@ -5,14 +5,21 @@
 
 {% for p in post_list %}
     <!-- Post -->
-    <div class="card mb-4">
+    <div class="card mb-4" id="post-{{ p.pk }}">
         {% if p.head_image %}
             <img class="card-img-top" src="{{ p.head_image.url }}" alt="{{ p }} head image">
         {% endif %}
     </div>
     <hr/>
-    <h2><a href="{{ p.get_absolute_url }}">{{ p.title }}</a></h2>
-    <h4>{{ p.created_at }}</h4>
-    <p>{{ p.content }}</p>
+    <div class="card-body">
+        {% if p.hashtag %}
+            <span class="badge badge-secondary float-right">{{ p.hashtag }}</span>
+        {% else %}
+            <span class="badge badge-secondary float-right">미분류</span>
+        {% endif %}
+        <h2><a href="{{ p.get_absolute_url }}">{{ p.title }}</a></h2>
+        <h4>{{ p.created_at }}</h4>
+        <p>{{ p.content }}</p>
+    </div>
 {% endfor %}
 {% endblock %}
