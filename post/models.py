@@ -35,6 +35,7 @@ class Post(models.Model):
 
     tags = models.ManyToManyField(Tag, blank=True) #ManyToMany필드는 null=True가 디폴트라 필요없음.
 
+    price = models.PositiveIntegerField(blank=True, null=True)  # 중고 상품의 가격
     def __str__(self): # 포스트제목 정의
         return f'[{self.pk}]{self.title} :: {self.author}' # 작성자도 출력되도록 함.
 
