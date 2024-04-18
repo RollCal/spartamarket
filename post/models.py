@@ -4,6 +4,15 @@ import os
 
 # Create your models here.
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return f'/post/tag/{self.slug}/'
 class Hashtag(models.Model):
     name = models.CharField(max_length=50, unique=True) #unique로 같은 해시태그를 다시 달 수 없도록 함.
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True) #unicode로 한국어 입력지원도 도움.
@@ -23,6 +32,8 @@ class Post(models.Model):
 
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL) # on_delete = 이 포스트의 작성자가 db에서 삭제됐을때 이 포스트도 함께 삭제함.
     hashtag = models.ForeignKey(Hashtag, null=True, blank=True, on_delete=models.SET_NULL)
+
+    tags = models.ManyToManyField(Tag, blank=True) #ManyToMany필드는 null=True가 디폴트라 필요없음.
 
     def __str__(self): # 포스트제목 정의
         return f'[{self.pk}]{self.title} :: {self.author}' # 작성자도 출력되도록 함.

@@ -6,6 +6,19 @@
 
 {% block main_area %}
 
+
+<!--Post Content-->
+<p>{{ post.content }}</p>
+
+{% if post.tags.exists %}
+    <i class="fas fa-tags"></i>
+    {% for tag in post.tags.iterator %}
+        <a href="{{ tag.get_absoute_url }}"><span class="badge badge-pill badge-light">{{ tag }}</span></a>
+    {% endfor %}
+    <br/>
+    <br/>
+{% endif %}
+
     <div id="post-area">
         {% if post.hashtag %}
             <span class="badge badge-secondary float-right">{{ post.hashtag }}</span>
