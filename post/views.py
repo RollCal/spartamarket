@@ -1,14 +1,15 @@
-from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import Post
 
 
-class PostList(ListView):
+class PostList(ListView): # CBV
     model = Post
     template_name = 'index.html' # 이걸 안적으면 post_list.html을 템플릿으로 인식해버림
     ordering = '-pk' # 최신순 정렬
 
-
+class PostDetail(DetailView):
+    model = Post
+    template_name = 'post_detail.html'
 
 # Create your views here.
 # def index(request):
@@ -20,13 +21,13 @@ class PostList(ListView):
 #                      }
 #                   )
 #
-def single_post_page(request, pk):
-    post = Post.objects.get(pk=pk)
-
-    return render(
-        request,
-        'single_post_page.html',
-        {
-            'post': post,
-        }
-    )
+# def single_post_page(request, pk):
+#     post = Post.objects.get(pk=pk)
+#
+#     return render(
+#         request,
+#         'post_detail.html',
+#         {
+#             'post': post,
+#         }
+#     )

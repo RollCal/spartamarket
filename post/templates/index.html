@@ -8,6 +8,10 @@
     <h1>Market</h1>
 
 {% for p in post_list %}
+    <!-- Post -->
+    <div class="card mb-4">
+        <img class="card-img-top" src="{{ p.head_image.url }}" alt="Card image cap">
+    </div>
     <hr/>
     <h2><a href="{{ p.get_absolute_url }}">{{ p.title }}</a></h2> # p 각각의 url을 따옴.
     <h4>{{ p.created_at }}</h4>
