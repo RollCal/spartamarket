@@ -1,3 +1,4 @@
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -5,8 +6,41 @@
     <title>{% block head_title %}마켓{% endblock %}</title>
 </head>
 <body>
+    <header>
+        <!--검색-->
+        <div clss="card my-4">
+            <h5 class="card-header">Search</h5>
+            <div class="card-body">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for..." id="search-input">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button" onclick="searchPost();">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <!-- 로그인 및 회원가입 버튼 -->
+                <li><a href="{% url 'login' %}">로그인</a></li>
+                <li><a href="{% url 'signup' %}">회원가입</a></li>
+            </ul>
+                <!-- 소셜 로그인 및 로그인/회원가입 버튼 -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="{% provider_login_url 'google' %}"><i class="fab fa-google"></i>&nbsp&nbsp Log in with Google</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
     {% block main_area %}
     {% endblock %}
+
+
+    <!-- 해시태그 및 미분류 링크 -->
     {% for hashtag in hashtags %}
     <li>
         <a href="{{ hashtag.get_absolute_url }}">{{ hashtag }} ({{ hashtag.post_set.count }})</a>
@@ -16,4 +50,22 @@
         <a href="/blog/hashtag/no_hashtag/">미분류 ({{ no_hashtag_post_count }})</a>
     </li>
 </body>
+<script>
+    function searchPost(){
+        let searchValue = document.getElementById('search-input').value.trim();
+        if (searchValue.length > 1){
+            location.href="/post/search/" + searchValue + "/";
+        }
+        else{
+            alert('검색어('+ searchValue +')가 너무 짧습니다.');
+        }
+    };
+
+    document.getElementById('search-input').inputEventListener('keyup', function(event)
+    {
+        if(event.key === 'Enter') {
+            searchPost();
+        }
+    });
+</script>
 </html>

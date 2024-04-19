@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Login</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                <!-- 로그인 폼 필드 -->
+                <!-- 사용자명과 비밀번호 입력 필드 -->
+                <input type="text" name="username" placeholder="Username"><br>
+                <input type="password" name="password" placeholder="Password"><br>
+                <button type="submit">Login</button>
+            </form>
+            <!-- 소셜 로그인 링크 -->
+            <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="{% provider_login_url 'google' %}"><i class="fab fa-google"></i>&nbsp&nbsp Log in with Google</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

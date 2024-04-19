@@ -6,6 +6,7 @@
         <a class="btn btn-info btn0sm float-right" href="/post/create_post/" role="button"><i class="fas fa-pen"></i>&nbsp;&nbsp;New Post</a>
     {% endif %}
     <h1>Market
+        {% if search_info %}<small class="text-muted">{{ search_info }}</small>{% endif %}
         {% if hashtag %}<span class="badge badge-secondary">{{ hashtag }}</span>{% endif %}
         {% if tag %}<span class="badge badge-light"><i class="fas fa-tags"></i> ({{ tag.post_set.count }}</span>{% endif %}
     </h1>

@@ -25,6 +25,7 @@ urlpatterns = [
     path('post/', include('post.urls')),
     path('admin/', admin.site.urls),
     path('profile/', include('profile.urls')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # 미디어 파일을 불러오기 위한 URL지정
