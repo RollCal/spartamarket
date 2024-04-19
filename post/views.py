@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Post, Hashtag, Tag
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.core.exceptions import PermissionDenied
 
 class PostList(ListView): # CBV
     model = Post
@@ -61,6 +61,20 @@ class PostCreate(LoginRequiredMixin,CreateView):
             return super(PostCreate, self).form_valid(form)
         else:
             return redirect('/post/')
+
+class PostUpdate(LoginRequiredMixin,UpdateView):
+    model = Post
+    fields = ['title', 'content', 'head_image', 'hashtag', 'price']
+
+    template_name = 'post_update_form.html'
+
+    def dispatch(self, request, *args, **kwargs): # 작성자만 수정가능
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied #권한없음
+
+
 
 # Create your views here.
 # def index(request):
