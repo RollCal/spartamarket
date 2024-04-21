@@ -42,5 +42,11 @@ class Post(models.Model):
     def get_absolute_url(self): # get_absolute_url로 각 게시물로 가는 기능을 활성화
         return f'/post/{self.pk}/'
 
+    def get_avatar_url(self):
+        if self.author.socialaccount_set.exists():
+            return self.author.socialaccount_set.first().get_avatar_url()
+        else:
+            return 'http://placehold.it/50x50'
+
 
 # 상세 날짜폴더까지 타고 들어가는건 시간에 큰 영향을 주지않지만 한 폴더안에 너무 많은 파일이 있다면 파일을 찾는데 오래걸림.

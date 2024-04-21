@@ -8,6 +8,11 @@
 
 {% if user.is_authenticated and user == post.author %}
     <a class="btn btn-info btn-sm float-right" href="/post/update_post/{{ post.pk }}/" role="button">Edit Post</a>
+
+<!-- Single Comment -->
+<div class="media mb-4" id="post-{{ post.pk }}">
+    <img class="d-flex mr-3 rounded-circle" src="{{ post.get_avatar_url }}" alt="{{ post.author }}" width="60px"
+</div>
 {% endif %}
 <!--Post Content-->
 <p>{{ post.content }}</p>
