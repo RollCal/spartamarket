@@ -4,6 +4,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib import messages
 from django.db.models import Q
 
 class PostList(ListView): # CBV
@@ -131,11 +135,32 @@ class PostUpdate(LoginRequiredMixin,UpdateView):
         else:
             raise PermissionDenied #권한없음
 
-def login_view(request):
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('/')  # 로그인 성공 시 이동할 URL
+        else:
+            messages.error(request, 'Invalid username or password.')
     return render(request, 'login.html')
 
-def signup_view(request):
-    return render(request, 'signup.html')
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # 로그인 처리
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('/post')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
 
 
 class PostSearch(PostList):
